@@ -1,0 +1,33 @@
+<tbody>
+            <tr>
+                <form [formGroup]="form">
+                    <div formArrayName="fields">
+                        <div *ngFor="let field of fields.controls; let i = index;">
+                            <div [formGroupName]="i">
+                                <td>
+                                    <mat-form-field appearance="fill" style="display:none" class="margin-left-right-10">
+                                        <mat-label>id</mat-label>
+                                        <input matInput formControlName="id" [disabled]="field.get('id').disabled">
+                                    </mat-form-field>
+                                </td>
+                                <td>
+                                    <mat-form-field appearance="fill" class="margin-left-right-10">
+                                        <mat-label>Date</mat-label>
+                                        <input matInput id="form_date_{{i}}" formControlName="date"
+                                            [disabled]="field.get('date').disabled" [matDatepicker]="picker1">
+                                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker1></mat-datepicker>
+                                        <mat-error *ngIf="field.controls['date'].invalid">Date is required</mat-error>
+                                    </mat-form-field>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </form>
+            </tr>
+        </tbody>

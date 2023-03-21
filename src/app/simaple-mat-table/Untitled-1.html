@@ -1,0 +1,69 @@
+ <form [formGroup]="form">
+        <div formArrayName="fields" fxLayout="column wrap" fxLayoutGap="10px">
+            <div  class="dailogHead">
+                <div class="desc"><h3></h3> </div> 
+                <div class="date"><h3>Date</h3> </div>
+                <div class="perName"><h3>Person</h3> </div>
+                <div class="hrs"><h3>Hours</h3></div>
+                <div class="desc"><h3>Description</h3> </div> 
+                <div class="desc"><h3></h3> </div> 
+            </div>
+          <div *ngFor="let field of fields.controls; let i = index;" fxLayout="column wrap" fxLayoutGap="10px">
+            <div [formGroupName]="i" fxFlex="25">
+
+            <mat-form-field appearance="fill" style="display:none" class="margin-left-right-10">
+                <mat-label>id</mat-label>
+                <input matInput formControlName="id" [disabled]="field.get('id').disabled">
+            </mat-form-field>
+
+              <mat-form-field appearance="fill" class="margin-left-right-10">
+                <mat-label>Date</mat-label>
+                <input matInput id="form_date_{{i}}"  formControlName="date"  [disabled]="field.get('date').disabled" [matDatepicker]="picker1">
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+                <mat-error *ngIf="field.controls['date'].invalid">Date is required</mat-error>
+              </mat-form-field>
+      
+              
+      
+              <mat-form-field appearance="fill" class="margin-left-right-10">
+                <mat-label>Responsible Person</mat-label>
+                <mat-select formControlName="responsiblePerson" [disabled]="field.get('responsiblePerson').disabled" required>
+                    <mat-option *ngFor="let employeesName of employees" #responsibleId  [value]="employeesName.id" >{{employeesName.firstName}} {{employeesName.lastName}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="field.controls['responsiblePerson'].invalid">Responsible Person is required</mat-error>
+              </mat-form-field>
+      
+              <mat-form-field appearance="fill" class="margin-left-right-10">
+                <mat-label>Hours</mat-label>
+                <input matInput formControlName="hours" [disabled]="field.get('hours').disabled">
+                <mat-error *ngIf="field.controls['hours'].invalid">Hours are required</mat-error>
+              </mat-form-field>
+      
+              <mat-form-field appearance="fill" class="margin-left-right-10">
+                <mat-label>Description</mat-label>
+                <textarea matInput rows="1" formControlName="description" [disabled]="field.get('description').disabled"></textarea>
+                <mat-error *ngIf="field.controls['description'].invalid">Description is required</mat-error>
+              </mat-form-field>
+      
+              <mat-icon matTooltip="Edit" class="edit-icon" svgIcon="basic:pencil-edit" color="primary" [id]="'edit-button-' + i"  *ngIf="enableFields" (click)="enableFields(i)" ></mat-icon>
+              <mat-icon matTooltip="Save"class="check-icon"  [id]="'save-button-' + i" style="display:none; color:green" *ngIf="enableFields" (click)="saveTimeEntry(i,field)">check</mat-icon>
+              <mat-icon matTooltip="Cancel" [id]="'cancel-button-' + i" style="display:none; color:gray" *ngIf="enableFields" (click)="disableFields(i)">cancel</mat-icon>
+              <mat-icon matTooltip="Delete" class="remove-icon" color="danger" [id]="'remove-button-' + i" style="display:none" (click)="removeField(i,field)">delete</mat-icon>
+            </div>
+          </div>
+        </div>
+      </form>
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Person</th>
+    <th>Hours</th>
+    <th>Description</th>
+    <th>Actions</th>
+  </tr>
+
+<tr>
+  
+</tr>
+</table>    
